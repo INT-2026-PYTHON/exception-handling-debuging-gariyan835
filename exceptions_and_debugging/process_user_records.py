@@ -137,3 +137,34 @@ Explanation:
 =================================================
 
 """
+def process_records(records):
+    clean_records = []
+    error_log = []
+
+    for index, record in enumerate(records):
+        try:
+            if not isinstance(record, dict):
+                raise TypeError("Record is not a dictionary")
+
+            name = record["name"]
+            age = int(record["age"])
+            score = float(record["score"])
+
+            clean_records.append({
+                "name": name,
+                "age": age,
+                "score": score
+            })
+
+        except (KeyError, ValueError, TypeError) as e:
+            error_log.append((index, type(e).__name__, str(e)))
+
+            try:
+                raise
+            except Exception:
+                pass
+
+        finally:
+            pass
+
+    return (clean_records, error_log)
