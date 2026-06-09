@@ -124,3 +124,31 @@ Explanation:
 =================================================
 
 """
+def read_numbers(file_path):
+    lines_read = 0
+
+    try:
+        total = 0
+
+        with open(file_path, "r") as file:
+            for line in file:
+                total += float(line.strip())
+                lines_read += 1
+
+    except FileNotFoundError:
+        return ("error", "File not found", lines_read)
+
+    except PermissionError:
+        return ("error", "Permission denied", lines_read)
+
+    except ValueError:
+        return ("error", "Invalid number in file", lines_read)
+
+    except Exception as e:
+        return ("error", str(e), lines_read)
+
+    else:
+        return ("ok", total, lines_read)
+
+    finally:
+        print("File operation completed")
